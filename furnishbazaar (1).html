@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WoodNigo — Furniture for Every Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141414;
+    --bg-deep:#0a0a0a;
+    --card:#1f1f1f;
+    --card-hover:#262626;
+    --orange:#FF7A1A;
+    --amber:#FFB347;
+    --cream:#F5F1EA;
+    --muted:#9a9a94;
+    --line:#333330;
+    --success:#3ecf7e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Poppins',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--bg-deep);
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:12px 20px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    border-bottom:3px solid var(--orange);
+  }
+  .logo{
+    display:flex;
+    align-items:baseline;
+    gap:2px;
+    font-family:'Poppins',sans-serif;
+    font-weight:800;
+    font-size:22px;
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .logo .b1{color:var(--cream);}
+  .logo .b2{color:var(--orange);}
+  .logo-tag{font-size:9px;color:var(--muted);font-weight:500;letter-spacing:.4px;margin-top:-2px;}
+
+  .deliver{
+    display:flex;
+    flex-direction:column;
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.3;
+    flex-shrink:0;
+    cursor:pointer;
+  }
+  .deliver strong{color:var(--cream);font-size:13px;}
+
+  .searchbar{
+    flex:1;
+    display:flex;
+    max-width:760px;
+    height:40px;
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .searchbar select{
+    background:#e8e6e1;
+    border:none;
+    padding:0 8px;
+    font-size:12px;
+    color:#333;
+    border-right:1px solid #b7b5af;
+  }
+  .searchbar input{
+    flex:1;
+    border:none;
+    padding:0 12px;
+    font-size:14px;
+    outline:none;
+  }
+  .searchbar button{
+    width:46px;
+    background:var(--orange);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .searchbar button:hover{background:var(--amber);}
+
+  .navlinks{
+    display:flex;
+    align-items:center;
+    gap:22px;
+    flex-shrink:0;
+  }
+  .navitem{
+    font-size:11px;
+    line-height:1.3;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .navitem strong{display:block;font-size:13px;font-weight:600;}
+  .navitem:hover strong{color:var(--orange);}
+
+  .cart{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    cursor:pointer;
+    position:relative;
+  }
+  .cart-count{
+    background:var(--orange);
+    color:var(--bg-deep);
+    font-weight:800;
+    font-size:12px;
+    width:18px;height:18px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    position:absolute;
+    top:-8px;left:14px;
+  }
+
+  /* ---------- CATEGORY STRIP ---------- */
+  .catstrip{
+    background:#1c1c1c;
+    display:flex;
+    gap:22px;
+    padding:9px 20px;
+    font-size:13px;
+    overflow-x:auto;
+    border-bottom:1px solid var(--line);
+  }
+  .catstrip a{white-space:nowrap;color:#d9d6cf;}
+  .catstrip a:hover{color:var(--orange);}
+  .catstrip .all{font-weight:700;color:var(--orange);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(255,122,26,.18), transparent 55%),
+      linear-gradient(135deg,#1a1a1a 0%, #0d0d0d 100%);
+    padding:56px 40px 64px;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    align-items:center;
+    gap:40px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,122,26,.12);
+    border:1px solid rgba(255,122,26,.4);
+    color:var(--amber);
+    font-size:12px;
+    font-weight:600;
+    padding:5px 12px;
+    border-radius:20px;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:44px;
+    line-height:1.12;
+    font-weight:800;
+    margin-bottom:16px;
+  }
+  .hero h1 span{color:var(--orange);}
+  .hero p{
+    color:var(--muted);
+    font-size:15.5px;
+    max-width:460px;
+    margin-bottom:26px;
+    line-height:1.6;
+  }
+  .hero-ctas{display:flex;gap:14px;}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--orange),#ff9944);
+    color:#161200;
+    font-weight:700;
+    font-size:14.5px;
+    padding:13px 26px;
+    border-radius:6px;
+    box-shadow:0 8px 22px rgba(255,122,26,.28);
+  }
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{
+    border:1.5px solid var(--line);
+    color:var(--cream);
+    font-weight:600;
+    font-size:14.5px;
+    padding:12px 24px;
+    border-radius:6px;
+  }
+  .btn-ghost:hover{border-color:var(--orange);color:var(--orange);}
+
+  .hero-visual{
+    position:relative;
+    height:340px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-visual svg{width:100%;height:100%;}
+
+  /* ---------- SECTION WRAP ---------- */
+  .section{padding:40px 40px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:20px;
+  }
+  .section-head h2{font-size:22px;font-weight:700;}
+  .section-head .sub{color:var(--muted);font-size:13px;margin-top:4px;}
+  .seeall{color:var(--orange);font-size:13px;font-weight:600;}
+  .seeall:hover{color:var(--amber);}
+
+  /* ---------- CATEGORY GRID ---------- */
+  .catgrid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:16px;
+  }
+  .catcard{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 12px 16px;
+    text-align:center;
+    transition:.15s;
+    cursor:pointer;
+  }
+  .catcard:hover{background:var(--card-hover);border-color:var(--orange);transform:translateY(-3px);}
+  .catcard svg{width:46px;height:46px;margin:0 auto 10px;}
+  .catcard span{font-size:12.5px;font-weight:600;color:#e6e3db;}
+
+  /* ---------- DEAL STRIP ---------- */
+  .deal-strip{
+    background:linear-gradient(90deg,#20130a,#1c1c1c);
+    border:1px solid rgba(255,122,26,.3);
+    border-radius:12px;
+    padding:20px 26px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:0 40px 8px;
+  }
+  .deal-strip .txt strong{color:var(--orange);font-size:19px;}
+  .deal-strip .txt p{color:var(--muted);font-size:13px;margin-top:4px;}
+  .timer{display:flex;gap:8px;}
+  .timer div{
+    background:var(--bg-deep);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 10px;
+    text-align:center;
+    min-width:48px;
+  }
+  .timer div b{display:block;font-size:17px;color:var(--amber);}
+  .timer div small{font-size:9px;color:var(--muted);}
+
+  /* ---------- PRODUCT GRID ---------- */
+  .prodgrid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+  }
+  .prodcard{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    transition:.15s;
+    position:relative;
+  }
+  .prodcard:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.35);}
+  .badge{
+    position:absolute;top:12px;left:12px;
+    background:var(--orange);
+    color:#1a1200;
+    font-size:10.5px;
+    font-weight:800;
+    padding:3px 8px;
+    border-radius:4px;
+    z-index:2;
+  }
+  .prod-thumb{
+    background:#141414;
+    border-radius:8px;
+    height:170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:14px;
+  }
+  .prod-thumb svg{width:82px;height:82px;}
+  .prod-title{font-size:14px;font-weight:600;line-height:1.35;margin-bottom:6px;min-height:38px;}
+  .stars{color:var(--amber);font-size:12px;margin-bottom:6px;}
+  .stars span{color:var(--muted);margin-left:4px;}
+  .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:4px;}
+  .price-now{font-size:19px;font-weight:800;color:var(--cream);}
+  .price-now::before{content:"₹";font-size:13px;margin-right:1px;}
+  .price-old{font-size:12.5px;color:var(--muted);text-decoration:line-through;}
+  .price-off{font-size:12px;color:var(--success);font-weight:700;}
+  .prod-meta{font-size:11.5px;color:var(--muted);margin-bottom:12px;}
+  .addbtn{
+    margin-top:auto;
+    background:transparent;
+    border:1.5px solid var(--orange);
+    color:var(--orange);
+    font-weight:700;
+    font-size:13px;
+    padding:9px;
+    border-radius:6px;
+  }
+  .addbtn:hover{background:var(--orange);color:#1a1200;}
+  .addbtn.added{background:var(--success);border-color:var(--success);color:#092;color:#0a1a0f;}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    background:var(--bg-deep);
+    padding:34px 40px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .trust-item{display:flex;gap:12px;align-items:flex-start;}
+  .trust-item svg{width:30px;height:30px;flex-shrink:0;color:var(--orange);}
+  .trust-item strong{display:block;font-size:14px;margin-bottom:3px;}
+  .trust-item p{font-size:12px;color:var(--muted);}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--bg-deep);padding:44px 40px 20px;}
+  .foot-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:24px;
+    margin-bottom:32px;
+  }
+  .foot-col h4{font-size:13.5px;margin-bottom:14px;color:var(--cream);}
+  .foot-col a{display:block;font-size:12.5px;color:var(--muted);margin-bottom:9px;}
+  .foot-col a:hover{color:var(--orange);}
+  .foot-bottom{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:11.5px;
+    color:var(--muted);
+  }
+  .foot-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:16px;}
+  .foot-logo .b2{color:var(--orange);}
+
+  /* ---------- CART DRAWER ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,.55);
+    opacity:0;pointer-events:none;transition:.2s;z-index:200;
+  }
+  .overlay.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:-400px;width:380px;height:100%;
+    background:#1a1a1a;border-left:1px solid var(--line);
+    z-index:201;transition:.25s;display:flex;flex-direction:column;
+  }
+  .drawer.open{right:0;}
+  .drawer-head{
+    padding:18px 20px;border-bottom:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .drawer-head h3{font-size:17px;}
+  .drawer-head button{background:none;color:var(--muted);font-size:22px;line-height:1;}
+  .drawer-body{flex:1;overflow-y:auto;padding:14px 20px;}
+  .drawer-empty{color:var(--muted);font-size:13.5px;text-align:center;margin-top:60px;}
+  .cart-line{
+    display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);
+  }
+  .cart-line .thumb{
+    width:56px;height:56px;background:#141414;border-radius:6px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .cart-line .thumb svg{width:32px;height:32px;}
+  .cart-line-info{flex:1;}
+  .cart-line-info .t{font-size:13px;font-weight:600;margin-bottom:4px;}
+  .cart-line-info .p{font-size:13px;color:var(--orange);font-weight:700;}
+  .cart-line-info .p::before{content:"₹";}
+  .qty-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+  .qty-row button{
+    width:22px;height:22px;background:var(--card);border:1px solid var(--line);
+    border-radius:4px;color:var(--cream);font-size:13px;
+  }
+  .qty-row .rm{color:#ff6b6b;font-size:11px;margin-left:auto;background:none;}
+  .drawer-foot{
+    border-top:1px solid var(--line);padding:16px 20px 20px;
+  }
+  .drawer-foot .total-row{display:flex;justify-content:space-between;font-size:15px;font-weight:700;margin-bottom:14px;}
+  .drawer-foot .total-row span::before{content:"₹";}
+
+  /* ---------- TOAST ---------- */
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#1f1f1f;border:1px solid var(--orange);color:var(--cream);
+    padding:12px 22px;border-radius:8px;font-size:13.5px;font-weight:600;
+    opacity:0;pointer-events:none;transition:.25s;z-index:300;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media(max-width:1100px){
+    .prodgrid{grid-template-columns:repeat(2,1fr);}
+    .catgrid{grid-template-columns:repeat(3,1fr);}
+    .hero{grid-template-columns:1fr;padding:40px 24px;}
+    .hero-visual{height:220px;order:-1;}
+    .trust{grid-template-columns:repeat(2,1fr);}
+    .foot-grid{grid-template-columns:repeat(2,1fr);}
+    .searchbar{display:none;}
+    .navlinks{gap:14px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div>
+      <div><span class="b1">Wood</span><span class="b2">Nigo</span></div>
+      <div class="logo-tag">.in</div>
+    </div>
+  </div>
+  <div class="deliver">
+    <span>Deliver to</span>
+    <strong>📍 Faridabad 121002</strong>
+  </div>
+  <div class="searchbar">
+    <select>
+      <option>All Categories</option>
+      <option>Sofas</option>
+      <option>Beds</option>
+      <option>Dining</option>
+      <option>Storage</option>
+    </select>
+    <input type="text" placeholder="Search for sofas, beds, dining tables...">
+    <button aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#141414" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+  </div>
+  <div class="navlinks">
+    <div class="navitem"><span>Hello,</span><strong>Sign In</strong></div>
+    <div class="navitem"><span>Returns</span><strong>& Orders</strong></div>
+    <div class="cart" onclick="toggleCart(true)">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F5F1EA" stroke-width="1.8"><circle cx="9" cy="21" r="1.4"/><circle cx="19" cy="21" r="1.4"/><path d="M2.5 3h2.4l2.6 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21.5 7H6"/></svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORY STRIP -->
+<div class="catstrip">
+  <a class="all">☰ All Furniture</a>
+  <a href="#categories">Living Room</a>
+  <a href="#categories">Bedroom</a>
+  <a href="#categories">Dining</a>
+  <a href="#categories">Office</a>
+  <a href="#deals">Today's Deals</a>
+  <a href="#categories">New Arrivals</a>
+  <a href="#categories">Storage</a>
+  <a href="#categories">Outdoor</a>
+  <a href="#categories">Kids Furniture</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">🔥 Independence Day Sale · Up to 60% off</div>
+    <h1>Furnish your home <span>without furnishing your wallet.</span></h1>
+    <p>Handpicked sofas, beds, dining sets and more — delivered to your doorstep with free assembly and easy 10-day returns.</p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">Shop the Sale</button>
+      <button class="btn-ghost" onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Browse Categories</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 400 300" fill="none">
+      <ellipse cx="200" cy="270" rx="170" ry="18" fill="#000" opacity="0.35"/>
+      <!-- sofa -->
+      <rect x="70" y="140" width="260" height="90" rx="16" fill="#FF7A1A"/>
+      <rect x="70" y="110" width="260" height="50" rx="16" fill="#ff8f3d"/>
+      <rect x="60" y="120" width="34" height="100" rx="14" fill="#e0670f"/>
+      <rect x="306" y="120" width="34" height="100" rx="14" fill="#e0670f"/>
+      <rect x="100" y="118" width="60" height="36" rx="10" fill="#ffb347"/>
+      <rect x="240" y="118" width="60" height="36" rx="10" fill="#ffb347"/>
+      <rect x="90" y="222" width="16" height="30" rx="4" fill="#2a2a2a"/>
+      <rect x="294" y="222" width="16" height="30" rx="4" fill="#2a2a2a"/>
+      <!-- lamp -->
+      <line x1="350" y1="250" x2="350" y2="90" stroke="#9a9a94" stroke-width="3"/>
+      <path d="M320 90 L380 90 L365 50 L335 50 Z" fill="#FFB347"/>
+      <circle cx="350" cy="255" r="8" fill="#9a9a94"/>
+      <!-- plant -->
+      <rect x="30" y="230" width="30" height="30" rx="4" fill="#e0670f"/>
+      <path d="M45 230 C20 210 15 180 45 165 C75 180 70 210 45 230" fill="#3ecf7e"/>
+    </svg>
+  </div>
+</section>
+
+<!-- DEAL STRIP -->
+<div class="section" style="padding-bottom:8px;" id="deals">
+  <div class="deal-strip">
+    <div class="txt">
+      <strong>⚡ Deal of the Day — Recliner Sofas</strong>
+      <p>Extra 15% off, ends in:</p>
+    </div>
+    <div class="timer">
+      <div><b id="hh">05</b><small>HRS</small></div>
+      <div><b id="mm">42</b><small>MIN</small></div>
+      <div><b id="ss">10</b><small>SEC</small></div>
+    </div>
+    <button class="btn-primary" onclick="document.getElementById('bestsellers').scrollIntoView({behavior:'smooth'})">Grab Deal</button>
+  </div>
+</div>
+
+<!-- CATEGORY GRID -->
+<section class="section" id="categories">
+  <div class="section-head">
+    <div>
+      <h2>Shop by Category</h2>
+      <div class="sub">Find exactly what your room needs</div>
+    </div>
+  </div>
+  <div class="catgrid">
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="6" y="20" width="36" height="14" rx="3"/><rect x="9" y="10" width="30" height="12" rx="3"/><line x1="8" y1="34" x2="8" y2="40"/><line x1="40" y1="34" x2="40" y2="40"/></svg>
+      <span>Sofas</span>
+    </div>
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="6" y="18" width="36" height="10" rx="2"/><rect x="6" y="28" width="36" height="8"/><line x1="8" y1="36" x2="8" y2="42"/><line x1="40" y1="36" x2="40" y2="42"/><path d="M6 18 v-6 a3 3 0 0 1 3-3 h9 a3 3 0 0 1 3 3 v6" /></svg>
+      <span>Beds</span>
+    </div>
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><ellipse cx="24" cy="20" rx="16" ry="6"/><line x1="8" y1="20" x2="8" y2="34"/><line x1="40" y1="20" x2="40" y2="34"/><line x1="24" y1="26" x2="24" y2="40"/></svg>
+      <span>Dining Tables</span>
+    </div>
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="10" y="6" width="28" height="36" rx="2"/><line x1="10" y1="18" x2="38" y2="18"/><line x1="10" y1="30" x2="38" y2="30"/><circle cx="30" cy="12" r="1.4" fill="#FF7A1A"/></svg>
+      <span>Wardrobes</span>
+    </div>
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="10" y="8" width="28" height="8"/><rect x="10" y="20" width="28" height="8"/><rect x="10" y="32" width="28" height="8"/></svg>
+      <span>Bookshelves</span>
+    </div>
+    <div class="catcard">
+      <svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><path d="M24 6 L36 16 L34 16 L34 40 L14 40 L14 16 L12 16 Z"/><line x1="24" y1="24" x2="24" y2="40"/></svg>
+      <span>Office Chairs</span>
+    </div>
+  </div>
+</section>
+
+<!-- BESTSELLERS -->
+<section class="section" id="bestsellers">
+  <div class="section-head">
+    <div>
+      <h2>Trending in Furniture</h2>
+      <div class="sub">Most loved by customers this week</div>
+    </div>
+    <a class="seeall" href="#">See all →</a>
+  </div>
+  <div class="prodgrid" id="prodGrid"></div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust">
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="7" width="15" height="11" rx="1"/><path d="M16 10h3l3 3v4h-6z"/><circle cx="6" cy="19" r="1.6"/><circle cx="18" cy="19" r="1.6"/></svg>
+    <div><strong>Free Delivery</strong><p>On orders above ₹4,999 pan-India</p></div>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 L21 6 v6 c0 5-4 9-9 10-5-1-9-5-9-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    <div><strong>2-Year Warranty</strong><p>On all engineered wood furniture</p></div>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 12l4-4M3 12l4 4"/></svg>
+    <div><strong>10-Day Returns</strong><p>No questions asked replacement</p></div>
+  </div>
+  <div class="trust-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+    <div><strong>Easy EMI</strong><p>No-cost EMI from ₹499/month</p></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-col">
+      <h4>Get to Know Us</h4>
+      <a href="#">About WoodNigo</a>
+      <a href="#">Careers</a>
+      <a href="#">Press Releases</a>
+      <a href="#">Sustainability</a>
+    </div>
+    <div class="foot-col">
+      <h4>Shop</h4>
+      <a href="#">Living Room</a>
+      <a href="#">Bedroom</a>
+      <a href="#">Dining</a>
+      <a href="#">Office</a>
+    </div>
+    <div class="foot-col">
+      <h4>Customer Service</h4>
+      <a href="#">Track Your Order</a>
+      <a href="#">Returns & Refunds</a>
+      <a href="#">Assembly Support</a>
+      <a href="#">Contact Us</a>
+    </div>
+    <div class="foot-col">
+      <h4>Payments</h4>
+      <a href="#">EMI Options</a>
+      <a href="#">Gift Cards</a>
+      <a href="#">WoodNigo Pay</a>
+    </div>
+    <div class="foot-col">
+      <h4>Let Us Help You</h4>
+      <a href="#">Your Account</a>
+      <a href="#">Shipping Info</a>
+      <a href="#">Help Center</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-logo"><span>Wood</span><span class="b2">Nigo</span> · Made for Indian homes</div>
+    <div>© 2026 WoodNigo.in — Demo storefront, not affiliated with Amazon.</div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="toggleCart(false)"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3>Your Cart</h3>
+    <button onclick="toggleCart(false)">×</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <div class="total-row"><span>Total</span><span id="cartTotal">0</span></div>
+    <button class="btn-primary" style="width:100%;text-align:center;" onclick="checkout()">Proceed to Checkout</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------- ICONS ----------
+const icons = {
+  sofa: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="6" y="20" width="36" height="14" rx="3"/><rect x="9" y="10" width="30" height="12" rx="3"/><line x1="8" y1="34" x2="8" y2="40"/><line x1="40" y1="34" x2="40" y2="40"/></svg>`,
+  bed: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="6" y="18" width="36" height="10" rx="2"/><rect x="6" y="28" width="36" height="8"/><line x1="8" y1="36" x2="8" y2="42"/><line x1="40" y1="36" x2="40" y2="42"/><path d="M6 18 v-6 a3 3 0 0 1 3-3 h9 a3 3 0 0 1 3 3 v6"/></svg>`,
+  table: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><ellipse cx="24" cy="20" rx="16" ry="6"/><line x1="8" y1="20" x2="8" y2="34"/><line x1="40" y1="20" x2="40" y2="34"/><line x1="24" y1="26" x2="24" y2="40"/></svg>`,
+  wardrobe: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="10" y="6" width="28" height="36" rx="2"/><line x1="10" y1="18" x2="38" y2="18"/><line x1="10" y1="30" x2="38" y2="30"/><circle cx="30" cy="12" r="1.4" fill="#FF7A1A"/></svg>`,
+  chair: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><path d="M24 6 L36 16 L34 16 L34 40 L14 40 L14 16 L12 16 Z"/><line x1="24" y1="24" x2="24" y2="40"/></svg>`,
+  shelf: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><rect x="10" y="8" width="28" height="8"/><rect x="10" y="20" width="28" height="8"/><rect x="10" y="32" width="28" height="8"/></svg>`,
+  lamp: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><line x1="24" y1="44" x2="24" y2="20"/><path d="M10 20 L38 20 L30 6 L18 6 Z"/><line x1="16" y1="44" x2="32" y2="44"/></svg>`,
+  recliner: `<svg viewBox="0 0 48 48" fill="none" stroke="#FF7A1A" stroke-width="2"><path d="M8 34 L8 14 L20 14 L24 24 L40 24 L40 34 Z"/><line x1="8" y1="34" x2="8" y2="40"/><line x1="40" y1="34" x2="40" y2="40"/><line x1="2" y1="30" x2="8" y2="30"/></svg>`
+};
+
+// ---------- PRODUCTS ----------
+const products = [
+  {id:1, name:"3-Seater Fabric Sofa, Charcoal Grey", icon:"sofa", price:24999, old:39999, rating:4.3, reviews:1284, badge:"Bestseller", meta:"Free assembly"},
+  {id:2, name:"Queen Size Bed with Storage, Walnut Finish", icon:"bed", price:18499, old:27999, rating:4.4, reviews:892, badge:"Deal", meta:"No-cost EMI"},
+  {id:3, name:"6-Seater Dining Table Set, Sheesham Wood", icon:"table", price:32999, old:45999, rating:4.5, reviews:531, badge:null, meta:"Free delivery"},
+  {id:4, name:"3-Door Wardrobe with Mirror", icon:"wardrobe", price:15999, old:22999, rating:4.1, reviews:674, badge:"Deal", meta:"2-yr warranty"},
+  {id:5, name:"Ergonomic Mesh Office Chair", icon:"chair", price:6499, old:9999, rating:4.2, reviews:2103, badge:"Bestseller", meta:"Free delivery"},
+  {id:6, name:"5-Tier Book Shelf, Industrial Style", icon:"shelf", price:4299, old:6499, rating:4.0, reviews:317, badge:null, meta:"Easy assembly"},
+  {id:7, name:"Modern Floor Lamp, Brass & Fabric", icon:"lamp", price:2799, old:3999, rating:4.3, reviews:198, badge:null, meta:"1-yr warranty"},
+  {id:8, name:"Single Seater Recliner, Tan Leatherette", icon:"recliner", price:16999, old:24999, rating:4.4, reviews:445, badge:"Deal", meta:"No-cost EMI"},
+];
+
+function stars(r){
+  const full = Math.floor(r);
+  return "★".repeat(full) + "☆".repeat(5-full);
+}
+
+function renderProducts(){
+  const grid = document.getElementById('prodGrid');
+  grid.innerHTML = products.map(p => {
+    const off = Math.round((1 - p.price/p.old)*100);
+    return `
+    <div class="prodcard">
+      ${p.badge ? `<div class="badge">${p.badge}</div>` : ""}
+      <div class="prod-thumb">${icons[p.icon]}</div>
+      <div class="prod-title">${p.name}</div>
+      <div class="stars">${stars(p.rating)} <span>(${p.reviews})</span></div>
+      <div class="price-row">
+        <span class="price-now">${p.price.toLocaleString('en-IN')}</span>
+        <span class="price-old">₹${p.old.toLocaleString('en-IN')}</span>
+        <span class="price-off">${off}% off</span>
+      </div>
+      <div class="prod-meta">${p.meta}</div>
+      <button class="addbtn" onclick="addToCart(${p.id}, this)">Add to Cart</button>
+    </div>`;
+  }).join("");
+}
+renderProducts();
+
+// ---------- CART (in-memory, no localStorage) ----------
+let cart = [];
+
+function addToCart(id, btn){
+  const p = products.find(x => x.id === id);
+  const line = cart.find(x => x.id === id);
+  if(line){ line.qty++; } else { cart.push({...p, qty:1}); }
+  renderCart();
+  showToast(`${p.name.split(',')[0]} added to cart`);
+  if(btn){
+    btn.textContent = "Added ✓";
+    btn.classList.add('added');
+    setTimeout(()=>{ btn.textContent = "Add to Cart"; btn.classList.remove('added'); }, 1200);
+  }
+}
+
+function changeQty(id, delta){
+  const line = cart.find(x => x.id === id);
+  if(!line) return;
+  line.qty += delta;
+  if(line.qty <= 0) cart = cart.filter(x => x.id !== id);
+  renderCart();
+}
+
+function removeLine(id){
+  cart = cart.filter(x => x.id !== id);
+  renderCart();
+}
+
+function renderCart(){
+  const count = cart.reduce((s,x)=>s+x.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  const body = document.getElementById('drawerBody');
+  if(cart.length === 0){
+    body.innerHTML = `<div class="drawer-empty">Your cart is empty.<br>Start adding some furniture!</div>`;
+  } else {
+    body.innerHTML = cart.map(l => `
+      <div class="cart-line">
+        <div class="thumb">${icons[l.icon]}</div>
+        <div class="cart-line-info">
+          <div class="t">${l.name}</div>
+          <div class="p">${(l.price*l.qty).toLocaleString('en-IN')}</div>
+          <div class="qty-row">
+            <button onclick="changeQty(${l.id},-1)">−</button>
+            <span>${l.qty}</span>
+            <button onclick="changeQty(${l.id},1)">+</button>
+            <button class="rm" onclick="removeLine(${l.id})">Remove</button>
+          </div>
+        </div>
+      </div>`).join("");
+  }
+  const total = cart.reduce((s,x)=>s + x.price*x.qty, 0);
+  document.getElementById('cartTotal').textContent = total.toLocaleString('en-IN');
+}
+renderCart();
+
+function toggleCart(open){
+  document.getElementById('drawer').classList.toggle('open', open);
+  document.getElementById('overlay').classList.toggle('open', open);
+}
+
+function checkout(){
+  if(cart.length === 0){ showToast("Your cart is empty"); return; }
+  showToast("This is a demo — checkout isn't connected to real payments.");
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=> t.classList.remove('show'), 2200);
+}
+
+// ---------- COUNTDOWN TIMER ----------
+let totalSeconds = 5*3600 + 42*60 + 10;
+setInterval(()=>{
+  totalSeconds = Math.max(0, totalSeconds - 1);
+  const h = Math.floor(totalSeconds/3600);
+  const m = Math.floor((totalSeconds%3600)/60);
+  const s = totalSeconds%60;
+  document.getElementById('hh').textContent = String(h).padStart(2,'0');
+  document.getElementById('mm').textContent = String(m).padStart(2,'0');
+  document.getElementById('ss').textContent = String(s).padStart(2,'0');
+}, 1000);
+</script>
+</body>
+</html>
